@@ -1,5 +1,5 @@
-import React from 'react';
-import './app-header.css';
+import React from 'react'
+import './app-header.css'
 
 const AppHeader = ( { toDo, done } ) => {
   return (
@@ -7,7 +7,7 @@ const AppHeader = ( { toDo, done } ) => {
       <h1>Todo List</h1>
       <p>{ toDo } more to do, { done } done</p>
     </div>
-  );
-};
+  )
+}
 
-export default AppHeader;
+export default AppHeader

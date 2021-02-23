@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import './item-status-filter.css';
+import './item-status-filter.css'
 
 export default class ItemStatusFilter extends Component {
   render() {
@@ -13,6 +13,6 @@ export default class ItemStatusFilter extends Component {
         <button type="button"
           className="btn btn-outline-secondary">Done</button>
       </div>
-    );
+    )
   }
-};
+}
