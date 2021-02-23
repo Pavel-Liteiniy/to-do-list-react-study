@@ -3,14 +3,16 @@ import React from 'react';
 import TodoListItem from '../todo-list-item';
 import './todo-list.css';
 
-const TodoList = ( { todos } ) => {
+const TodoList = ( { tasks, appEventHandler: eventHandler } ) => {
 
-  const elements = todos.map( ( item ) => {
-    const { id, ...itemProps } = item;
+  const elements = tasks.map( ( task ) => {
+    const { id, ...taskProps } = task;
 
     return (
       <li key={ id } className="list-group-item">
-        <TodoListItem { ...itemProps } />
+        <TodoListItem
+          { ...taskProps }
+          listItemEventHandler={ (type) => eventHandler(type, id)} />
       </li>
     );
   } );
