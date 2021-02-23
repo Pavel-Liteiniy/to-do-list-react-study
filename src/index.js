@@ -9,5 +9,5 @@ const tasks = [
   { label: 'Have a lunch', important: false, id: 3 }
 ];
 
-ReactDOM.render( <App data={ tasks } />,
+ReactDOM.render( <App data={ tasks.slice() } />,
   document.getElementById( 'root' ) );
