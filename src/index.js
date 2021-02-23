@@ -3,5 +3,11 @@ import ReactDOM from 'react-dom';
 
 import App from './components/app';
 
-ReactDOM.render( <App />,
+const tasks = [
+  { label: 'Drink Coffee', important: false, id: 1 },
+  { label: 'Make Awesome App', important: true, id: 2 },
+  { label: 'Have a lunch', important: false, id: 3 }
+];
+
+ReactDOM.render( <App data={ tasks } />,
   document.getElementById( 'root' ) );
