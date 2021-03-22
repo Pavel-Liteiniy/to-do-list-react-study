@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { EventType } from '../../const'
+
 import './todo-list-item.css'
 
 const ListItemState = {
@@ -26,19 +28,19 @@ export default class TodoListItem extends Component {
       <div className={ labelClassList }>
         <span
           className="todo-list-item-label"
-          onClick={ () => eventHandler( `update`, { done: !done } ) }>
+          onClick={ () => eventHandler( EventType.UPDATE, { done: !done } ) }>
           { label }
         </span>
 
         <button type="button"
           className="btn btn-outline-success btn-sm float-right"
-          onClick={ () => eventHandler( `update`, { important: !important } ) }>
+          onClick={ () => eventHandler( EventType.UPDATE, { important: !important } ) }>
           <i className="fa fa-exclamation" />
         </button>
 
         <button type="button"
           className="btn btn-outline-danger btn-sm float-right"
-          onClick={ () => eventHandler( `delete` ) }>
+          onClick={ () => eventHandler( EventType.DELETE ) }>
           <i className="fa fa-trash-o" />
         </button>
       </div>

@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { nanoid } from 'nanoid'
+
+import { EventType } from '../../const'
+
 import './add-item-panel.css'
 
 export default class AddItemPanel extends Component {
@@ -48,7 +51,7 @@ export default class AddItemPanel extends Component {
 
   _onAddItemPanelSubmit = ( evt ) => {
     evt.preventDefault()
-    this._callback.submit( `add`, this._addTask( this.state ) )
+    this._callback.submit( EventType.ADD, this._addTask( this.state ) )
 
     this.setState( { label: `` } )
   }
