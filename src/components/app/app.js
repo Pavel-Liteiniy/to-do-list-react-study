@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
+
+import { EventType, Filter } from '../../const'
+
 import AppHeader from '../app-header'
 import SearchPanel from '../search-panel'
 import TodoList from '../todo-list'
 import ItemStatusFilter from '../item-status-filter'
 import AddItemPanel from '../add-item-panel'
 import './app.css'
-const EventType = {
-  DELETE: `delete`,
-  ADD: `add`,
-  UPDATE: `update`,
-}
+
 const deleteItem = ( items, index ) => {
   if ( index === -1 ) {
     return items
@@ -35,19 +34,28 @@ const updateItem = ( items, update, index ) => {
 export default class App extends Component {
   state = {
     tasks: this.props.data,
+    filterSelected: Filter.ALL,
+    searchRequest: ``,
   }
 
   render() {
-    const { tasks } = this.state;
+    const { tasks: unfilteredTasks, filterSelected, searchRequest } = this.state;
+    const filteredTasks = this._filterTasks( unfilteredTasks );
+
+
     return (
       <div className="todo-app">
-        <AppHeader toDo={ tasks.length } done={ this._getDoneTaskCount( tasks ) } />
+        <AppHeader toDo={ unfilteredTasks.length } done={ this._getDoneTaskCount( unfilteredTasks ) } />
         <div className="top-panel d-flex">
-          <SearchPanel />
-          <ItemStatusFilter />
+          <SearchPanel
+            searchRequest={ searchRequest }
+            searchHandler={ ( newSearchRequest ) => { this._changeSearchRequest( newSearchRequest ) } } />
+          <ItemStatusFilter
+            filterSelected={ filterSelected }
+            filterHandler={ ( newfilterType ) => { this._changeFilterType( newfilterType ) } } />
         </div>
         <TodoList
-          tasks={ tasks }
+          tasks={ filteredTasks }
           appEventHandler={ ( type, data ) => this._updateTasks( type, data ) } />
         <AddItemPanel
           appEventHandler={ ( type, data ) => this._updateTasks( type, data ) } />
@@ -84,11 +92,40 @@ export default class App extends Component {
     }
   }
 
+  _changeFilterType = ( newfilterType ) => {
+    this.setState( { filterSelected: newfilterType } )
+  }
+
+  _changeSearchRequest = ( newSearchRequest ) => {
+    this.setState( { searchRequest: newSearchRequest } )
+  }
+
+  _filterTasks = ( tasks ) => {
+    return tasks.filter( ( task ) => {
+      const { filterSelected, searchRequest } = this.state
+
+      if ( searchRequest.length > 0 && !task.label.toLowerCase().includes( searchRequest.toLowerCase() ) ) {
+        return false
+      }
+
+      switch ( filterSelected ) {
+        case Filter.ALL:
+          return true
+        case Filter.ACTIVE:
+          return !task.done
+        case Filter.DONE:
+          return task.done
+        default:
+          return true
+      }
+    } )
+  }
+
   _getDoneTaskCount( tasks ) {
     let doneTaskCount = 0;
 
     tasks.forEach( task => {
-      if ( `done` in task && task.done ) {
+      if ( task.done ) {
         doneTaskCount++
       }
     } )
