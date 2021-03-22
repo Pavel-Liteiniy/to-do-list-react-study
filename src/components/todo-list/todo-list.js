@@ -12,7 +12,7 @@ const TodoList = ( { tasks, appEventHandler: eventHandler } ) => {
       <li key={ id } className="list-group-item">
         <TodoListItem
           { ...taskProps }
-          listItemEventHandler={ ( type ) => eventHandler( type, id ) } />
+          listItemEventHandler={ ( type, data = {} ) => eventHandler( type, { id, ...taskProps, ...data } ) } />
       </li>
     )
   } )

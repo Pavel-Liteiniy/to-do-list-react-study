@@ -9,14 +9,8 @@ const ListItemState = {
 }
 
 export default class TodoListItem extends Component {
-  state = {
-    done: false,
-    important: this.props.important,
-  }
-
   render() {
-    const { label, listItemEventHandler: eventHandler } = this.props
-    const { important = false, done = false } = this.state
+    const { label, listItemEventHandler: eventHandler, important = false, done = false } = this.props
 
     let labelClassList = ListItemState.DEFAULT
 
@@ -32,13 +26,13 @@ export default class TodoListItem extends Component {
       <div className={ labelClassList }>
         <span
           className="todo-list-item-label"
-          onClick={ this._onLabelClick }>
+          onClick={ () => eventHandler( `update`, { done: !done } ) }>
           { label }
         </span>
 
         <button type="button"
           className="btn btn-outline-success btn-sm float-right"
-          onClick={ this._onImportantButtonClick }>
+          onClick={ () => eventHandler( `update`, { important: !important } ) }>
           <i className="fa fa-exclamation" />
         </button>
 
@@ -49,17 +43,5 @@ export default class TodoListItem extends Component {
         </button>
       </div>
     )
-  }
-
-  _onLabelClick = () => {
-    this.setState( ( { done } ) => {
-      return { done: !done }
-    } )
-  }
-
-  _onImportantButtonClick = () => {
-    this.setState( ( { important } ) => {
-      return { important: !important }
-    } )
   }
 }
